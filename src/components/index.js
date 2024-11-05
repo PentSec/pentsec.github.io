@@ -1,0 +1,7 @@
+export { default as ContentApp } from './ContentApp/ContentApp'
+export { default as FooterApp } from './FooterApp/FooterApp'
+export { default as ProfileCard } from './ProfileCard/ProfileCard'
+export { default as ReposCard } from './ReposCard/ReposCard'
+export { default as ContactCard } from './ContactCard/ContactCard'
+export { default as Languages } from './Languages/Languages'
+export { default as ModalSkills } from './ModalSkills/ModalSkills'
