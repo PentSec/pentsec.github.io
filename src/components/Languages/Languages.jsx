@@ -1,5 +1,5 @@
 import { useGithubUser } from '../../context/GitHubUserContext'
-import { Card, CardBody, CardHeader, Progress } from '@nextui-org/react'
+import { Card, CardBody, CardHeader, Chip } from '@nextui-org/react'
 import languageColors from '../../data/colors.json'
 
 const Languages = () => {
@@ -17,16 +17,29 @@ const Languages = () => {
         <Card is isHoverable className="mb-4">
             <CardHeader>
                 <h4 className="leading-none font-open-sans text-small text-default-600">
-                    Languages used in my repositories:{count.size}
+                    Languages I've learned:{count.size}
                 </h4>
             </CardHeader>
             <CardBody>
-                <div>
-                    {languageStats.map(({ language, percentage, count }) => {
+                <div className="flex flex-wrap gap-2 mt-2">
+                    {languageStats.map(({ language }) => {
                         const languageColor = getLanguageColor(language)
                         return (
-                            <div key={language} style={{ marginBottom: '1px' }}>
-                                <Progress
+                            <div key={language} className="flex-shrink-0">
+                                <Chip
+                                    color="primary"
+                                    variant="faded"
+                                    startContent={
+                                        <p
+                                            className="w-3 h-3 mr-1 rounded-full opacity-60"
+                                            style={{ backgroundColor: languageColor }}
+                                        />
+                                    }
+                                >
+                                    {language}
+                                </Chip>
+
+                                {/* <Progress
                                     label={
                                         <div className="flex items-center">
                                             <div
@@ -42,7 +55,7 @@ const Languages = () => {
                                     value={parseFloat(percentage)}
                                     color="primary"
                                     showValueLabel={true}
-                                />
+                                /> */}
                             </div>
                         )
                     })}

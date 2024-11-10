@@ -78,7 +78,7 @@ export default function ReposCard() {
     if (!Array.isArray(userRepos)) return <p>No repositories found</p>
 
     return (
-        <ScrollShadow hideScrollBar className="h-[calc(85vh-32px)] overflow-auto ">
+        <ScrollShadow hideScrollBar className="h-[calc(65vh-0px)] overflow-auto ">
             <div className="grid grid-cols-2 gap-4 p-2 mb-4 overflow-auto">
                 {filteredRepos.slice(0, itemToShow).map((repo, index) => {
                     const isLastElement = index === itemToShow - 1
