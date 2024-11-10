@@ -27,7 +27,6 @@ const Languages = () => {
                         return (
                             <div key={language} className="flex-shrink-0">
                                 <Chip
-                                    color="primary"
                                     variant="faded"
                                     startContent={
                                         <p
