@@ -6,7 +6,7 @@ export default function FooterApp() {
             <div className="container flex flex-col items-center justify-between px-6 mx-auto">
                 <div className="flex items-center space-x-4">
                     <a
-                        href="https://github.com/tu_usuario"
+                        href="https://github.com/pentsec"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center text-gray-400 transition duration-200 hover:text-white"
