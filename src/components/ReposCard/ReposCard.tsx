@@ -1,18 +1,10 @@
-import {
-    Card,
-    CardHeader,
-    CardBody,
-    Image,
-    CardFooter,
-    ScrollShadow,
-    Link
-} from '@nextui-org/react'
-import { useGithubUser } from '../../context/GitHubUserContext'
+import { Card, CardHeader, CardBody, CardFooter, ScrollShadow, Link } from '@nextui-org/react'
 import { useEffect, useState, useRef, useCallback } from 'react'
-import languageColors from '../../data/colors.json'
+import languageColors from '@/data/colors.json'
 import { FaRegStar } from 'react-icons/fa'
 import { GoRepoForked } from 'react-icons/go'
 import { motion, AnimatePresence } from 'framer-motion'
+import { GitHubUserContextProps } from '@/types'
 
 const MotionCard = motion.create(Card)
 
@@ -28,11 +20,10 @@ const cardVariants = {
     }
 }
 
-export default function ReposCard() {
-    const { userRepos = [], isLoading, error } = useGithubUser('PentSec')
+export default function ReposCard({ userRepos, isLoading, error }: GitHubUserContextProps) {
     const [itemToShow, setItemToShow] = useState(8)
-    const observer = useRef()
-    const lastRepoElementRef = useRef()
+    const observer = useRef<IntersectionObserver | null>(null)
+    const lastRepoElementRef = useRef<HTMLDivElement | null>(null)
     const [searchValue] = useState('')
 
     const loadMore = useCallback(() => {
@@ -43,18 +34,18 @@ export default function ReposCard() {
         if (!Array.isArray(userRepos)) return []
 
         const sortedRepos = [...userRepos].sort(
-            (a, b) => new Date(b.updated_at) - new Date(a.updated_at)
+            (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
         )
 
         return sortedRepos.filter((repo) =>
-            repo.name.toLowerCase().includes(searchValue.toLowerCase())
+            repo.name?.toLowerCase().includes(searchValue.toLowerCase())
         )
     }
 
     const filteredRepos = filterRepos()
 
-    const getLanguageColor = (language) => {
-        return languageColors[language]?.color || ''
+    const getLanguageColor = (language: string | undefined | null): string => {
+        return languageColors[language as keyof typeof languageColors]?.color || ''
     }
 
     useEffect(() => {

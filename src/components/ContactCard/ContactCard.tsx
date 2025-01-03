@@ -1,16 +1,11 @@
-import { Card, CardHeader, CardBody, CardFooter, Link, Button } from '@nextui-org/react'
-import { useGithubUser } from '../../context/GitHubUserContext'
-import { FaGlobe, FaEnvelope, FaMapMarkerAlt, FaGithub } from 'react-icons/fa'
+import { Card, CardHeader, CardBody, CardFooter, Link } from '@nextui-org/react'
+import { FaEnvelope, FaMapMarkerAlt, FaGithub } from 'react-icons/fa'
 import { BsBuildings, BsTwitterX } from 'react-icons/bs'
+import { GitHubUserContextProps } from '@/types'
 
-export default function ContactCard() {
-    const { userData, isLoading, error } = useGithubUser('PentSec')
+export default function ContactCard({ userData, isLoading, error }: GitHubUserContextProps) {
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
-
-    const onOpen = () => {
-        setIsOpen(true)
-    }
 
     return (
         <Card isHoverable className="flex items-center content-center justify-center w-full mb-4">

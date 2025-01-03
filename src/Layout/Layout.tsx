@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion'
-import { ContentApp, FooterApp } from '../components'
-import { GitHubUserProvider } from '../context/GitHubUserContext'
+import { ContentApp, FooterApp } from '@/components'
+import { GitHubUserProvider } from '@/context/GithubUserContext'
 
-const Home = () => {
+const Layout = () => {
     return (
         <GitHubUserProvider username="PentSec">
             <motion.div
@@ -26,4 +26,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default Layout

@@ -1,12 +1,10 @@
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Tooltip } from '@nextui-org/react'
-import { useGithubUser } from '../../context/GitHubUserContext'
 import { useState } from 'react'
-import { ModalSkills } from '../../components'
+import { ModalSkills } from '@/components'
+import { GitHubUserContextProps } from '@/types'
 
-export default function ProfileCard() {
-    const { userData, isLoading, error } = useGithubUser('PentSec')
-    const [isModalOpen, setModalIsOpen] = useState(false)
-    const [isHovered, setIsHovered] = useState(false)
+export default function ProfileCard({ userData, isLoading, error }: GitHubUserContextProps) {
+    const [isModalOpen, setModalIsOpen] = useState<boolean | undefined>(false)
 
     const openModal = () => {
         setModalIsOpen(true)
@@ -38,14 +36,7 @@ export default function ProfileCard() {
                     ]
                 }}
             >
-                <Card
-                    isPressable
-                    isHoverable
-                    className="w-full mb-4"
-                    onPress={openModal}
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                >
+                <Card isPressable isHoverable className="w-full mb-4" onPress={openModal}>
                     <CardHeader className="items-center justify-center justify-col">
                         <div className="flex flex-col items-center justify-center gap-1">
                             <Avatar
@@ -53,7 +44,7 @@ export default function ProfileCard() {
                                 color="success"
                                 radius="full"
                                 className="w-32 h-32 mb-4 text-large"
-                                src={userData.avatar_url}
+                                src={userData?.avatar_url}
                             />
 
                             <h4 className="text-2xl font-semibold leading-none text-default-600">

@@ -5,7 +5,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, ModalContent } from
 import { marked } from 'marked'
 import 'github-markdown-css/github-markdown.css'
 
-export default function ModalSkills({ onClose }) {
+export default function ModalSkills({ onClose }: { onClose: () => void }) {
     const [readmeContent, setReadmeContent] = useState('')
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export default function ModalSkills({ onClose }) {
             .then((response) => response.text())
             .then((markdown) => {
                 const htmlContent = marked(markdown)
-                const safeHtml = DOMPurify.sanitize(htmlContent)
+                const safeHtml = DOMPurify.sanitize(htmlContent as string)
                 setReadmeContent(safeHtml)
             })
             .catch((error) => console.error('Error al obtener el README:', error))
