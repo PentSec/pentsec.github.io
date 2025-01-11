@@ -9,6 +9,8 @@ export type UserData = {
     following?: number
     twitter_username?: string
     html_url?: string
+    size?: number
+    public_repos?: number
 }
 
 export type UserRepo = {
@@ -21,6 +23,11 @@ export type UserRepo = {
     stargazers_count?: number
     forks_count?: number
     language?: string | null
+    avatar_url?: string
+    login?: string
+    bio?: string
+    followers?: number
+    following?: number
 }
 
 export type LanguageStat = {
@@ -35,6 +42,8 @@ export type GitHubUserContextProps = {
     languageStats: { language: string }[] | null
     isLoading: boolean | undefined
     error: string | null | undefined
+    count?: number
+    size?: number
 }
 
 export type GitHubUserProviderProps = {
