@@ -1,12 +1,12 @@
 import {
-    TclIcon,
     ScalaIcon,
     JavaScriptIcon,
     TypeScriptIcon,
     LuaIcon,
     CssIcon,
     PythonIcon,
-    BashIcon
+    BashIcon,
+    TclIcon
 } from '@/assets/Icons'
 import { JSX } from 'react'
 
