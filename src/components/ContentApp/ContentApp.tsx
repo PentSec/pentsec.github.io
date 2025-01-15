@@ -5,6 +5,7 @@ import { useGithubUser } from '@/context/GithubUserContext'
 
 export default function ContentApp() {
     const { userRepos, isLoading, error, languageStats, userData } = useGithubUser() || {}
+    console.log(languageStats)
     useEffect(() => {
         const container: HTMLElement | null = document.querySelector('.container')
         if (container) {
@@ -40,7 +41,7 @@ export default function ContentApp() {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-3 gap-4 p-4 mb-4 rounded-lg bg-zinc-800 lg:col-span-2">
+                <div className="col-span-3 gap-4 p-4 mb-4 rounded-lg bg-default-100/40 lg:col-span-2">
                     <div>
                         <ReposCard
                             userRepos={userRepos || []}

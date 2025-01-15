@@ -9,13 +9,13 @@ export default function FooterApp() {
                         href="https://github.com/pentsec"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center text-gray-400 transition duration-200 hover:text-white"
+                        className="flex items-center text-default-600 transition duration-200 hover:text-default-900"
                     >
                         <FaGithub className="w-5 h-5 mr-1" />
                         GitHub
                     </a>
                 </div>
-                <p className="mt-2 text-sm text-gray-400">
+                <p className="mt-2 text-sm text-default-600">
                     © {new Date().getFullYear()} Jeff. All rights reserved.
                 </p>
             </div>

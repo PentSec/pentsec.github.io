@@ -5,14 +5,16 @@ import {
     CardFooter,
     ScrollShadow,
     Link,
-    Skeleton
+    Skeleton,
+    Tooltip
 } from '@nextui-org/react'
-import { useEffect, useState, useRef, useCallback } from 'react'
+import { useEffect, useState, useRef, useCallback, JSX } from 'react'
 import languageColors from '@/data/colors.json'
 import { FaRegStar } from 'react-icons/fa'
 import { GoRepoForked } from 'react-icons/go'
 import { motion, AnimatePresence } from 'framer-motion'
 import { GitHubUserContextProps } from '@/types'
+import langIcons from '@/utils/LangIcons'
 
 const MotionCard = motion.create(Card)
 
@@ -56,6 +58,10 @@ export default function ReposCard({ userRepos, isLoading, error }: GitHubUserCon
         return languageColors[language as keyof typeof languageColors]?.color || ''
     }
 
+    const getLanguageIcon = (language: string | undefined | null): JSX.Element => {
+        return langIcons[language as keyof typeof langIcons] || langIcons['Unknown']
+    }
+
     useEffect(() => {
         if (observer.current) observer.current.disconnect()
         observer.current = new IntersectionObserver(
@@ -72,11 +78,11 @@ export default function ReposCard({ userRepos, isLoading, error }: GitHubUserCon
         }
     }, [itemToShow, filteredRepos])
 
-    if (error) return <p>Error: {error}</p>
+    // if (error) return <p>Error: {error}</p>
     if (!Array.isArray(userRepos)) return <p>No repositories found</p>
 
     return (
-        <ScrollShadow hideScrollBar className="h-[calc(65vh-0px)] overflow-auto ">
+        <ScrollShadow visibility="none" hideScrollBar className="h-[calc(65vh-0px)] overflow-auto">
             <div className="grid grid-cols-2 gap-4 p-2 mb-4 overflow-auto">
                 {filteredRepos.slice(0, itemToShow).map((repo, index) => {
                     const isLastElement = index === itemToShow - 1
@@ -122,15 +128,25 @@ export default function ReposCard({ userRepos, isLoading, error }: GitHubUserCon
                                                 <GoRepoForked className="mr-1" /> {repo.forks_count}
                                             </span>
                                         </div>
-                                        <div className="flex items-center">
-                                            <div
-                                                className="w-3 h-3 mr-1 rounded-full opacity-60"
-                                                style={{
-                                                    backgroundColor: getLanguageColor(repo.language)
-                                                }}
-                                            />
-                                            <span>{repo.language ? repo.language : ''}</span>
-                                        </div>
+
+                                        <Tooltip
+                                            content={
+                                                <div className="flex items-center">
+                                                    <div
+                                                        className="w-3 h-3 mr-1 rounded-full opacity-60"
+                                                        style={{
+                                                            backgroundColor: getLanguageColor(
+                                                                repo.language
+                                                            )
+                                                        }}
+                                                    />{' '}
+                                                    {repo.language || 'Unknown'}
+                                                </div>
+                                            }
+                                            showArrow={true}
+                                        >
+                                            {getLanguageIcon(repo.language)}
+                                        </Tooltip>
                                     </CardFooter>
                                 </Skeleton>
                             </MotionCard>

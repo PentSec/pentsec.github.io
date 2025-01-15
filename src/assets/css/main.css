@@ -6,80 +6,8 @@
     html {
         font-size: 16px;
         padding: 0px !important;
-        overflow-x: hidden;
+        overflow: hidden;
         scroll-padding-top: 64px;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        align-items: center;
-        justify-content: center;
-        /* background-image: url('../images/bg/background5.png'); */
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-        /* user-select: none; */
-    }
-
-    .center-gradient {
-        min-height: 100vh;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(
-            circle at 100% 100%,
-            rgba(0, 0, 0, 0.6) 100%,
-            rgba(0, 0, 0, 0.6) 100%
-        );
-        backdrop-filter: blur(2px);
-        z-index: 1;
-    }
-
-    .content {
-        position: relative;
-        z-index: 2;
-        color: white;
-        text-align: center;
-        /* padding: 20px; */
-    }
-
-    code {
-        font-weight: 600;
-        padding: 3px 5px;
-        border-radius: 2px;
-        background-color: var(--color-background-mute);
-        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono,
-            monospace;
-        font-size: 85%;
-    }
-
-    @font-face {
-        font-display: swap;
-        font-family: 'Roboto';
-        font-weight: 400;
-        font-style: normal;
-        src: url('/src/assets/font/roboto.woff2') format('woff2');
-    }
-
-    @font-face {
-        font-display: swap;
-        font-family: 'Rubik';
-        font-weight: 400;
-        font-style: normal;
-        src: url('/src/assets/font/rubik.woff2') format('woff2');
-    }
-
-    @font-face {
-        font-display: swap;
-        font-family: 'Open Sans';
-        font-weight: 800;
-        font-style: normal;
-        src: url('/src/assets/font/open-sans.woff2') format('woff2');
     }
 
     :root {
@@ -93,5 +21,165 @@
         -moz-osx-font-smoothing: grayscale;
         line-height: 1.5;
         font-weight: 400;
+    }
+
+    *::-webkit-scrollbar {
+        width: var(--sb-size);
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--sb-track-color);
+        border-radius: 3px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background: var(--sb-thumb-color);
+        border-radius: 3px;
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+        * {
+            scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+        }
+
+        .poppins-thin {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 100;
+            font-style: normal;
+        }
+
+        .poppins-extralight {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 200;
+            font-style: normal;
+        }
+
+        .poppins-light {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .poppins-regular {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .poppins-medium {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        .poppins-semibold {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .poppins-bold {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        .poppins-extrabold {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-style: normal;
+        }
+
+        .poppins-black {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        .poppins-thin-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 100;
+            font-style: italic;
+        }
+
+        .poppins-extralight-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 200;
+            font-style: italic;
+        }
+
+        .poppins-light-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .poppins-regular-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .poppins-medium-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .poppins-semibold-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .poppins-bold-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .poppins-extrabold-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-style: italic;
+        }
+
+        .poppins-black-italic {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+        }
+        @font-face {
+            font-display: swap;
+            font-family: 'Roboto';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/fonts/roboto.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Rubik';
+            font-weight: 400;
+            font-style: normal;
+            src: url('/fonts/rubik.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-display: swap;
+            font-family: 'Open Sans';
+            font-weight: 800;
+            font-style: normal;
+            src: url('/fonts/open-sans.woff2') format('woff2');
+        }
+    }
+}
+
+@layer components {
+    .light-bg-gradiant {
+        @apply absolute inset-0 -z-10 min-h-screen w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)];
+    }
+    .dark-bg-gradiant {
+        @apply absolute inset-0 -z-10 min-h-screen w-full [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)];
     }
 }

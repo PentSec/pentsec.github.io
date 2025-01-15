@@ -4,7 +4,8 @@ import { BsBuildings, BsTwitterX } from 'react-icons/bs'
 import { GitHubUserContextProps } from '@/types'
 
 export default function ContactCard({ userData, isLoading, error }: GitHubUserContextProps) {
-    if (error) return <p>Error: {error}</p>
+    console.log(userData)
+    // if (error) return <p>Error: {error}</p>
 
     return (
         <Card isHoverable className="flex items-center content-center justify-center w-full mb-4">
@@ -18,47 +19,59 @@ export default function ContactCard({ userData, isLoading, error }: GitHubUserCo
                             <Link className="flex items-center space-x-2 text-default-600">
                                 <FaMapMarkerAlt /> <span>Location</span>
                             </Link>
-                            <span className="text-default-400">{userData?.location}</span>
+                            <span className="text-default-400">
+                                {userData?.location || 'Unknown'}
+                            </span>
                         </div>
                         <div className="flex items-center justify-between">
                             <Link
                                 showAnchorIcon
                                 href="https://maddonsmanager.github.io/"
                                 isExternal
-                                className="flex items-center space-x-2 text-default-600 hover:text-blue-600"
+                                color="foreground"
+                                underline="hover"
                             >
-                                <BsBuildings /> <span>Company</span>
+                                <BsBuildings className="mr-2" /> <span>Company</span>
                             </Link>
-                            <span className="text-default-400">{userData?.company}</span>
+                            <span className="text-default-400">
+                                {userData?.company || 'Unknown'}
+                            </span>
                         </div>
                         <div className="flex items-center justify-between">
                             <Link
                                 showAnchorIcon
-                                href="https://x.com/__J3ff_"
+                                href={`https://x.com/${userData?.twitter_username}`}
                                 isExternal
-                                className="flex items-center space-x-2 text-default-600 hover:text-blue-600"
+                                color="foreground"
+                                underline="hover"
                             >
-                                <BsTwitterX /> <span>Xtwitter</span>
+                                <BsTwitterX className="mr-2" /> <span>Xtwitter</span>
                             </Link>
-                            <span className="text-default-400">{userData?.twitter_username}</span>
+                            <span className="text-default-400">
+                                {userData?.twitter_username || 'Unknown'}
+                            </span>
                         </div>
                         <div className="flex items-center justify-between">
                             <Link
                                 href={userData?.html_url}
                                 isExternal
                                 showAnchorIcon
-                                className="flex items-center space-x-2 text-default-600 hover:text-blue-600"
+                                color="foreground"
+                                underline="hover"
                             >
-                                <FaGithub /> <span>GitHub</span>
+                                <FaGithub className="mr-2" /> <span>GitHub</span>
                             </Link>
-                            <span className="text-default-400">{userData?.html_url}</span>
+                            <span className="text-default-400">
+                                {userData?.html_url || 'Unknown'}
+                            </span>
                         </div>
                         <div className="flex items-center justify-between">
                             <Link
                                 href="mailto:pentsec.2@protonmail.com"
-                                className="flex items-center space-x-2 text-default-600 hover:text-blue-600"
+                                color="foreground"
+                                underline="hover"
                             >
-                                <FaEnvelope /> <span>Email</span>
+                                <FaEnvelope className="mr-2" /> <span>Email</span>
                             </Link>
                             <span className="text-default-400">pentsec.2@protonmail.com</span>
                         </div>

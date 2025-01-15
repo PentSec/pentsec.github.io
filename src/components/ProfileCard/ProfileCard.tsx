@@ -26,7 +26,7 @@ export default function ProfileCard({ userData, isLoading, error }: ProfileCardP
     }
     const closeModal = () => setModalIsOpen(false)
 
-    if (error) return <p>Error: {error}</p>
+    // if (error) return <p>Error: {error}</p>
 
     return (
         <>
@@ -63,7 +63,7 @@ export default function ProfileCard({ userData, isLoading, error }: ProfileCardP
                         <CardHeader className="items-center justify-center justify-col">
                             <div className="flex flex-col items-center justify-center gap-1">
                                 <h4 className="text-2xl font-semibold leading-none text-default-600">
-                                    {userData?.name ?? 'Jeff'}
+                                    {userData?.name ?? 'Unknown'}
                                 </h4>
                                 <h5 className="text-lg tracking-tight text-default-400">
                                     @{userData?.login}

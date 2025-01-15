@@ -1,13 +1,18 @@
-import { Card, CardBody, CardHeader, Chip, Skeleton } from '@nextui-org/react'
+import { Card, CardBody, CardHeader, Chip, Skeleton, Tooltip } from '@nextui-org/react'
 import languageColors from '@/data/colors.json'
 import { GitHubUserContextProps } from '@/types/index'
+import langIcons from '@/utils/LangIcons'
 
 const Languages = ({ languageStats, isLoading, error }: GitHubUserContextProps) => {
     const getLanguageColor = (language: string) => {
         return languageColors[language as keyof typeof languageColors]?.color || ''
     }
 
-    if (error) return <p>Error: {error}</p>
+    const getLanguageIcon = (language: string) => {
+        return langIcons[language] || langIcons.Unknown
+    }
+
+    // if (error) return <p>Error: {error}</p>
     if (!languageStats) return <p>No language stats found</p>
 
     return (
@@ -22,19 +27,22 @@ const Languages = ({ languageStats, isLoading, error }: GitHubUserContextProps) 
                     <div className="flex flex-wrap gap-2 mt-2">
                         {languageStats.map(({ language }) => {
                             const languageColor = getLanguageColor(language)
+                            const languageIcon = getLanguageIcon(language)
                             return (
                                 <div key={language} className="flex-shrink-0">
-                                    <Chip
-                                        variant="faded"
-                                        startContent={
-                                            <p
-                                                className="w-3 h-3 mr-1 rounded-full opacity-60"
-                                                style={{ backgroundColor: languageColor }}
-                                            />
+                                    <Tooltip
+                                        content={
+                                            <div className="flex items-center">
+                                                <div
+                                                    className="w-3 h-3 mr-1 rounded-full opacity-60"
+                                                    style={{ backgroundColor: languageColor }}
+                                                />{' '}
+                                                {language}
+                                            </div>
                                         }
                                     >
-                                        {language}
-                                    </Chip>
+                                        {languageIcon}
+                                    </Tooltip>
                                 </div>
                             )
                         })}

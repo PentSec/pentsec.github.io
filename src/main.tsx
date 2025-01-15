@@ -1,10 +1,13 @@
 import ReactDOM from 'react-dom/client'
-import { NextUIProvider } from '@nextui-org/react'
-import Layout from '@/Layout/Layout'
 import '@/assets/css/main.css'
+import Layout from '@/Layout/default'
+import { Provider } from './Provider'
+import { GitHubUserProvider } from '@/context/GithubUserContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <NextUIProvider>
-        <Layout />
-    </NextUIProvider>
+    <Provider>
+        <GitHubUserProvider username="PentSec">
+            <Layout />
+        </GitHubUserProvider>
+    </Provider>
 )
