@@ -19,6 +19,7 @@ interface ProfileCardProps {
 
 export default function ProfileCard({ userData, isLoading, error }: ProfileCardProps) {
     const [isModalOpen, setModalIsOpen] = useState<boolean | undefined>(false)
+    console.log(userData)
 
     const openModal = () => {
         setModalIsOpen(true)
@@ -49,17 +50,17 @@ export default function ProfileCard({ userData, isLoading, error }: ProfileCardP
                     ]
                 }}
             >
-                <Card isPressable isHoverable className="w-full mb-4" onPress={openModal}>
-                    <div className="flex items-center justify-center justify-col mt-2">
-                        <Avatar
-                            isBordered
-                            color="success"
-                            radius="full"
-                            className="w-32 h-32 mb-4 text-large "
-                            src={userData?.avatar_url}
-                        />
-                    </div>
+                <Card isPressable isHoverable className="flex w-full mb-4" onPress={openModal}>
                     <Skeleton isLoaded={!isLoading} className="w-full h-full">
+                        <div className="flex items-center justify-center justify-col mt-2">
+                            <Avatar
+                                isBordered
+                                color="success"
+                                radius="full"
+                                className="w-32 h-32 mb-4"
+                                src={userData?.avatar_url || ''}
+                            />
+                        </div>
                         <CardHeader className="items-center justify-center justify-col">
                             <div className="flex flex-col items-center justify-center gap-1">
                                 <h4 className="text-2xl font-semibold leading-none text-default-600">
