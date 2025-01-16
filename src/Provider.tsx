@@ -1,10 +1,10 @@
-import { NextUIProvider } from '@nextui-org/react'
+import { HeroUIProvider } from "@heroui/react"
 import { ReactNode } from 'react'
 
 export function Provider({ children }: { children: ReactNode }) {
     return (
-        <NextUIProvider className="light-bg-gradiant dark:dark-bg-gradiant overflow-auto overflow-x-hidden">
+        <HeroUIProvider className="light-bg-gradiant dark:dark-bg-gradiant overflow-auto overflow-x-hidden">
             {children}
-        </NextUIProvider>
+        </HeroUIProvider>
     )
 }

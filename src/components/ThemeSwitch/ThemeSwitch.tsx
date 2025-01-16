@@ -1,6 +1,6 @@
-import { VisuallyHidden, useSwitch, SwitchProps } from '@nextui-org/react'
+import { VisuallyHidden, useSwitch, SwitchProps } from "@heroui/react"
 import { MoonIcon, SunIcon } from '@/assets/Icons'
-import { useTheme } from '@nextui-org/use-theme'
+import { useTheme } from "@heroui/use-theme"
 import { useEffect } from 'react'
 
 const ThemeSwitch = (props: SwitchProps) => {

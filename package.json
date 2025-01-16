@@ -10,8 +10,8 @@
         "preview": "vite preview"
     },
     "dependencies": {
-        "@nextui-org/react": "^2.6.11",
-        "@nextui-org/use-theme": "^2.1.1",
+        "@heroui/react": "2.6.12",
+        "@heroui/use-theme": "2.1.1",
         "@tailwindcss/typography": "^0.5.16",
         "autoprefixer": "^10.4.20",
         "dompurify": "^3.2.3",

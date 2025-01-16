@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardFooter, Link, Skeleton } from '@nextui-org/react'
+import { Card, CardHeader, CardBody, CardFooter, Link, Skeleton } from "@heroui/react"
 import { FaEnvelope, FaMapMarkerAlt, FaGithub } from 'react-icons/fa'
 import { BsBuildings, BsTwitterX } from 'react-icons/bs'
 import { GitHubUserContextProps } from '@/types'

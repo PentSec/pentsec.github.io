@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
 import DOMPurify from 'dompurify'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, ModalContent } from '@nextui-org/react'
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, ModalContent } from "@heroui/react"
 import { marked } from 'marked'
 import 'github-markdown-css/github-markdown.css'
 

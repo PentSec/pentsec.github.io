@@ -7,7 +7,7 @@ import {
     Link,
     Skeleton,
     Tooltip
-} from '@nextui-org/react'
+} from "@heroui/react"
 import { useEffect, useState, useRef, useCallback, JSX } from 'react'
 import languageColors from '@/data/colors.json'
 import { FaRegStar } from 'react-icons/fa'

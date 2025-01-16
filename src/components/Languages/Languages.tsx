@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Chip, Skeleton, Tooltip } from '@nextui-org/react'
+import { Card, CardBody, CardHeader, Chip, Skeleton, Tooltip } from "@heroui/react"
 import languageColors from '@/data/colors.json'
 import { GitHubUserContextProps } from '@/types/index'
 import langIcons from '@/utils/LangIcons'

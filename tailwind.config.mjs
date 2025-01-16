@@ -1,6 +1,6 @@
-import { nextui } from '@nextui-org/react'
+import { heroui } from "@heroui/react"
 const defaultTheme = require('tailwindcss/defaultTheme')
-const { commonColors } = require('@nextui-org/theme/colors')
+const { commonColors } = require('@heroui/theme/colors')
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
         './app/**/*.{js,ts,jsx,tsx,mdx}',
         './pages/**/*.{js,ts,jsx,tsx,mdx}',
         './components/**/*.{js,ts,jsx,tsx,mdx}',
-        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
+        './node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}',
 
         // Or if using `src` directory:
         './src/**/*.{js,ts,jsx,tsx,mdx}',
@@ -133,7 +133,7 @@ module.exports = {
             typography: (theme) => ({
                 DEFAULT: {
                     css: {
-                        color: 'hsl(var(--nextui-foreground))',
+                        color: 'hsl(var(--heroui-foreground))',
                         maxWidth: 'none',
                         hr: {
                             marginTop: '2em',
@@ -208,7 +208,7 @@ module.exports = {
                             fontWeight: 'inherit'
                         },
                         strong: {
-                            color: 'hsl(var(--nextui-strong))',
+                            color: 'hsl(var(--heroui-strong))',
                             fontWeight: theme('fontWeight.semibold')
                         },
                         'a strong': {
@@ -287,31 +287,31 @@ module.exports = {
                 },
                 dark: {
                     css: {
-                        color: 'hsl(var(--nextui-default-700))',
+                        color: 'hsl(var(--heroui-default-700))',
                         strong: {
-                            color: 'hsl(var(--nextui-cyan-500))'
+                            color: 'hsl(var(--heroui-cyan-500))'
                         }
                     }
                 },
                 neutral: {
                     css: {
-                        '--tw-prose-body': 'hsl(var(--nextui-default-700))',
-                        '--tw-prose-headings': 'hsl(var(--nextui-foreground))',
-                        '--tw-prose-lead': 'hsl(var(--nextui-default-600))',
-                        '--tw-prose-links': 'hsl(var(--nextui-default-900))',
-                        '--tw-prose-bold': 'hsl(var(--nextui-default-900))',
-                        '--tw-prose-counters': 'hsl(var(--nextui-default-500))',
-                        '--tw-prose-bullets': 'hsl(var(--nextui-default-300))',
-                        '--tw-prose-hr': 'hsl(var(--nextui-default-200))',
-                        '--tw-prose-quotes': 'hsl(var(--nextui-default-900))',
-                        '--tw-prose-quote-borders': 'hsl(var(--nextui-default-200))',
-                        '--tw-prose-captions': 'hsl(var(--nextui-default-500))',
-                        '--tw-prose-code': 'hsl(var(--nextui-default-900))',
-                        '--tw-prose-pre-code': 'hsl(var(--nextui-default-200))',
-                        '--tw-prose-pre-bg': 'hsl(var(--nextui-default-800))',
-                        '--tw-prose-th-borders': 'hsl(var(--nextui-default-300))',
-                        '--tw-prose-td-borders': 'hsl(var(--nextui-default-200))',
-                        '--tw-prose-invert-body': 'hsl(var(--nextui-default-300))',
+                        '--tw-prose-body': 'hsl(var(--heroui-default-700))',
+                        '--tw-prose-headings': 'hsl(var(--heroui-foreground))',
+                        '--tw-prose-lead': 'hsl(var(--heroui-default-600))',
+                        '--tw-prose-links': 'hsl(var(--heroui-default-900))',
+                        '--tw-prose-bold': 'hsl(var(--heroui-default-900))',
+                        '--tw-prose-counters': 'hsl(var(--heroui-default-500))',
+                        '--tw-prose-bullets': 'hsl(var(--heroui-default-300))',
+                        '--tw-prose-hr': 'hsl(var(--heroui-default-200))',
+                        '--tw-prose-quotes': 'hsl(var(--heroui-default-900))',
+                        '--tw-prose-quote-borders': 'hsl(var(--heroui-default-200))',
+                        '--tw-prose-captions': 'hsl(var(--heroui-default-500))',
+                        '--tw-prose-code': 'hsl(var(--heroui-default-900))',
+                        '--tw-prose-pre-code': 'hsl(var(--heroui-default-200))',
+                        '--tw-prose-pre-bg': 'hsl(var(--heroui-default-800))',
+                        '--tw-prose-th-borders': 'hsl(var(--heroui-default-300))',
+                        '--tw-prose-td-borders': 'hsl(var(--heroui-default-200))',
+                        '--tw-prose-invert-body': 'hsl(var(--heroui-default-300))',
                         '--tw-prose-invert-headings': commonColors.white,
                         '--tw-prose-invert-lead': theme('twColors.neutral[400]'),
                         '--tw-prose-invert-links': commonColors.white,
@@ -323,7 +323,7 @@ module.exports = {
                         '--tw-prose-invert-quote-borders': theme('twColors.neutral[700]'),
                         '--tw-prose-invert-captions': theme('twColors.neutral[400]'),
                         '--tw-prose-invert-code': commonColors.white,
-                        '--tw-prose-invert-pre-code': 'hsl(var(--nextui-default-300))',
+                        '--tw-prose-invert-pre-code': 'hsl(var(--heroui-default-300))',
                         '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
                         '--tw-prose-invert-th-borders': theme('twColors.neutral[600]'),
                         '--tw-prose-invert-td-borders': theme('twColors.neutral[700]')
@@ -332,5 +332,5 @@ module.exports = {
             })
         }
     },
-    plugins: [nextui(), require('@tailwindcss/typography')]
+    plugins: [heroui(), require('@tailwindcss/typography')]
 }
