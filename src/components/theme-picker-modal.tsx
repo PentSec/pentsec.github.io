@@ -65,7 +65,7 @@ export function ThemePickerModal({}: ThemePickerModalProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Theme picker"
-      className="fixed inset-0 z-200 flex items-start justify-center pt-[15vh]"
+      className="fixed inset-0 z-200 flex items-start justify-center pt-[15vh] max-md:pt-0 max-md:items-end max-md:pb-0"
       style={{
         background: "rgba(26,21,16,0.70)",
         backdropFilter: "blur(12px)",
@@ -76,12 +76,20 @@ export function ThemePickerModal({}: ThemePickerModalProps) {
       }}
     >
       <div
-        className="w-full max-w-[640px] overflow-hidden rounded-[12px] shadow-2xl"
+        className="w-full max-w-[640px] max-md:max-w-full max-md:rounded-b-none overflow-hidden rounded-[12px] shadow-2xl max-md:max-h-[85vh] max-md:overflow-y-auto"
         style={{
           background: "var(--bg-overlay)",
           border: "1px solid rgba(184,127,255,0.15)",
         }}
       >
+        {/* Drag handle for mobile swipe-down */}
+        <div className="hidden max-md:flex justify-center pt-2 pb-0">
+          <div
+            className="h-1 w-10 rounded-full"
+            style={{ background: "rgba(245,230,200,0.2)" }}
+          />
+        </div>
+
         <div className="px-4 py-3 border-b border-[var(--border-inactive)]">
           <h2 
             className="text-lg font-bold"
@@ -95,7 +103,7 @@ export function ThemePickerModal({}: ThemePickerModalProps) {
         </div>
 
         <div className="max-h-[55vh] overflow-y-auto p-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-md:gap-2">
             {THEMES.map((theme) => {
               const isActive = state.activeTheme === theme.id
               return (
@@ -165,7 +173,7 @@ export function ThemePickerModal({}: ThemePickerModalProps) {
         </div>
 
         <div 
-          className="flex items-center gap-4 px-4 py-2 text-[11px]"
+          className="flex items-center gap-4 px-4 py-2 text-[11px] max-md:pb-[calc(0.5rem+56px)]"
           style={{
             color: "var(--text-subtle)",
             borderTop: "1px solid rgba(184,127,255,0.08)",

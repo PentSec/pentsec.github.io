@@ -77,6 +77,11 @@
 /* ─── Fallback :root — active before JS sets data-theme ─── */
 
 :root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
   --bg-base: #0a0a0f; --bg-surface: #1a1a2e; --bg-overlay: #2a2a4e; --bg-mantle: #05050a;
   --text-primary: #c084fc; --text-secondary: #927ac2; --text-subtle: #5c4b7d;
   --border-inactive: #362952; --surface-warm: rgba(54,41,82,0.75);
@@ -520,4 +525,41 @@
 
 .hover-aurora:hover::before {
   opacity: 1;
+}
+
+/* ─── Mobile-first utilities ─── */
+
+/* Touch-friendly minimum size — use on interactive elements in mobile */
+.touch-min {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Safe-area-aware padding mixins */
+.safe-pb {
+  padding-bottom: var(--safe-area-bottom);
+}
+.safe-pt {
+  padding-top: var(--safe-area-top);
+}
+
+/* Responsive table: converts to stacked key-value on mobile */
+@media (max-width: 480px) {
+  .table-stack-mobile {
+    thead { display: none; }
+    tbody, tr, td { display: block; }
+    tr { margin-bottom: 4px; }
+    td {
+      width: 100% !important;
+      text-align: left !important;
+      padding: 1px 0 !important;
+      white-space: normal !important;
+    }
+  }
+}
+
+/* Hide scrollbar on mobile overlays */
+.overflow-scroll-touch {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }

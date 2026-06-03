@@ -57,12 +57,12 @@ export function WorkspaceHome() {
         </div>
 
         <div className="min-w-0 flex-1">
-          <table className="w-full border-collapse">
+          <table className="w-full border-collapse table-stack-mobile">
             <tbody>
               {SYS_INFO.map(([key, val]) => (
                 <tr key={key} className="align-top">
                   <td
-                    className="w-24 shrink-0 whitespace-nowrap py-[1px] pr-3 text-right text-xs uppercase tracking-wider"
+                    className="w-24 max-md:w-auto shrink-0 whitespace-nowrap max-md:whitespace-normal py-[1px] pr-3 text-right max-md:text-left text-xs uppercase tracking-wider"
                     style={{ color: "var(--neon-violet)" }}
                   >
                     {key}

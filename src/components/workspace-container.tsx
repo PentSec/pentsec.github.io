@@ -10,6 +10,7 @@ import { WorkspaceSkills } from "@/components/workspace-skills"
 import { WorkspaceContact } from "@/components/workspace-contact"
 import { WorkspaceBlog } from "@/components/workspace-blog"
 import { DEFAULT_WINDOW_IDS } from "@/lib/workspace-reducer"
+import { MAX_WORKSPACES } from "@/lib/workspace-reducer"
 
 type WorkspaceItem = {
   id: string
@@ -46,28 +47,78 @@ function buildWorkspaceItems(windowIds: string[]): WorkspaceItem[] {
     }))
 }
 
-function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = React.useState(() => {
-    if (typeof window === "undefined") return false
-    return window.matchMedia(query).matches
-  })
-
+function useSwipeNavigation(
+  ref: React.RefObject<HTMLElement | null>,
+  onSwipeLeft: () => void,
+  onSwipeRight: () => void,
+  threshold = 60,
+) {
   React.useEffect(() => {
-    const mq = window.matchMedia(query)
-    const handler = (e: MediaQueryListEvent) => setMatches(e.matches)
-    setMatches(mq.matches)
-    mq.addEventListener("change", handler)
-    return () => mq.removeEventListener("change", handler)
-  }, [query])
+    const el = ref.current
+    if (!el) return
 
-  return matches
+    let startX = 0
+    let startY = 0
+    let startTime = 0
+
+    function onTouchStart(e: TouchEvent) {
+      const target = e.target as HTMLElement
+      // Don't intercept if touching a Swapy handle or inside an overlay
+      if (target.closest("[data-swapy-handle]")) return
+      if (target.closest('[role="dialog"]')) return
+
+      startX = e.touches[0].clientX
+      startY = e.touches[0].clientY
+      startTime = Date.now()
+    }
+
+    function onTouchMove(e: TouchEvent) {
+      if (startX === 0) return
+      const dx = Math.abs(e.touches[0].clientX - startX)
+      const dy = Math.abs(e.touches[0].clientY - startY)
+      // Prevent page scroll for horizontal swipes
+      if (dx > dy && dx > 10) {
+        e.preventDefault()
+      }
+    }
+
+    function onTouchEnd(e: TouchEvent) {
+      if (startX === 0) return
+      const dx = e.changedTouches[0].clientX - startX
+      const dy = Math.abs(e.changedTouches[0].clientY - startY)
+      const dt = Date.now() - startTime
+
+      const absDx = Math.abs(dx)
+      // Must be a quick-ish horizontal flick, not a scroll
+      if (absDx < threshold || absDx < dy || dt > 400) {
+        startX = 0
+        startY = 0
+        return
+      }
+
+      if (dx > 0) onSwipeRight()
+      else onSwipeLeft()
+
+      startX = 0
+      startY = 0
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true })
+    el.addEventListener("touchmove", onTouchMove, { passive: false })
+    el.addEventListener("touchend", onTouchEnd, { passive: true })
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart)
+      el.removeEventListener("touchmove", onTouchMove)
+      el.removeEventListener("touchend", onTouchEnd)
+    }
+  }, [ref, onSwipeLeft, onSwipeRight, threshold])
 }
 
 function WorkspaceGrid({ items }: { items: WorkspaceItem[] }) {
   const { state, dispatch } = useWorkspace()
   const containerRef = React.useRef<HTMLDivElement>(null)
   const swapyRef = React.useRef<ReturnType<typeof createSwapy> | null>(null)
-  const isMobile = useMediaQuery("(max-width: 767px)")
   const wsRef = React.useRef(state.activeWorkspace)
   wsRef.current = state.activeWorkspace
 
@@ -75,9 +126,10 @@ function WorkspaceGrid({ items }: { items: WorkspaceItem[] }) {
     utils.initSlotItemMap(items, "id"),
   )
 
+  // Enable Swapy on ALL devices — it handles touch natively
   React.useEffect(() => {
     const el = containerRef.current
-    if (!el || items.length < 2 || isMobile) return
+    if (!el || items.length < 2) return
 
     swapyRef.current = createSwapy(el, {
       manualSwap: true,
@@ -107,7 +159,7 @@ function WorkspaceGrid({ items }: { items: WorkspaceItem[] }) {
       swapyRef.current?.destroy()
       swapyRef.current = null
     }
-  }, [items.length, isMobile])
+  }, [items.length])
 
   React.useEffect(() => {
     if (!swapyRef.current) return
@@ -148,12 +200,11 @@ function WorkspaceGrid({ items }: { items: WorkspaceItem[] }) {
       >
       <div
         ref={containerRef}
-        className={`grid gap-2 p-2 ${gridCols} auto-rows-fr flex-1`}
-        style={
-          isMobile
-            ? { gap: "6px" }
-            : undefined
-        }
+        className={`grid gap-2 p-2 max-md:gap-1.5 max-md:p-1.5 max-md:auto-rows-min auto-rows-fr flex-1 ${gridCols}`}
+        style={{
+          touchAction: "pan-y",
+          WebkitUserSelect: "none",
+        }}
       >
         {slottedItems.map(({ slotId, itemId, item }) =>
           item ? (
@@ -166,6 +217,12 @@ function WorkspaceGrid({ items }: { items: WorkspaceItem[] }) {
                   onActivate={() =>
                     dispatch({
                       type: "SET_ACTIVE_WINDOW",
+                      payload: itemId,
+                    })
+                  }
+                  onClose={() =>
+                    dispatch({
+                      type: "CLOSE_WINDOW",
                       payload: itemId,
                     })
                   }
@@ -187,10 +244,27 @@ const WS_TRANSITION_EXIT_MS = 180
 const WS_TRANSITION_ENTER_MS = 200
 
 export function WorkspaceContainer() {
-  const { state } = useWorkspace()
+  const { state, dispatch } = useWorkspace()
+  const containerRef = React.useRef<HTMLDivElement>(null)
   const [displayedWs, setDisplayedWs] = React.useState(state.activeWorkspace)
   const [direction, setDirection] = React.useState<1 | -1>(1)
   const [animPhase, setAnimPhase] = React.useState<TransitionPhase>("idle")
+
+  const goNext = React.useCallback(() => {
+    const next = Math.min(state.activeWorkspace + 1, MAX_WORKSPACES - 1)
+    if (next !== state.activeWorkspace) {
+      dispatch({ type: "SET_WORKSPACE", payload: next })
+    }
+  }, [state.activeWorkspace, dispatch])
+
+  const goPrev = React.useCallback(() => {
+    const prev = Math.max(state.activeWorkspace - 1, 0)
+    if (prev !== state.activeWorkspace) {
+      dispatch({ type: "SET_WORKSPACE", payload: prev })
+    }
+  }, [state.activeWorkspace, dispatch])
+
+  useSwipeNavigation(containerRef, goNext, goPrev, 60)
 
   React.useEffect(() => {
     if (state.activeWorkspace === displayedWs) return
@@ -247,7 +321,11 @@ export function WorkspaceContainer() {
   }
 
   return (
-    <div className="flex flex-col flex-1 min-h-0" style={animPhase !== "idle" ? animStyle : undefined}>
+    <div
+      ref={containerRef}
+      className="flex flex-col flex-1 min-h-0"
+      style={animPhase !== "idle" ? animStyle : undefined}
+    >
       <WorkspaceGrid key={displayedWs} items={items} />
     </div>
   )

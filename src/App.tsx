@@ -27,7 +27,7 @@ function AppContent() {
   }, [dispatch])
 
   return (
-  <div className="flex flex-col min-h-svh pt-12 bg-[var(--color-bg-base)] relative">
+  <div className="flex flex-col min-h-svh pt-12 max-md:pt-0 max-md:pb-[56px] bg-[var(--color-bg-base)] relative">
   <div
     aria-hidden="true"
     className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat transition-[background-image] duration-500 ease-out"

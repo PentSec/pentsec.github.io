@@ -38,6 +38,57 @@ const CATEGORIES: KeybindCategory[] = [
   },
 ]
 
+type GestureEntry = {
+  gesture: string
+  action: string
+}
+
+type GestureCategory = {
+  title: string
+  items: GestureEntry[]
+}
+
+const TOUCH_GESTURES: GestureCategory[] = [
+  {
+    title: "Navigation",
+    items: [
+      { gesture: "← swipe →", action: "Switch workspace" },
+      { gesture: "Tap 1–6", action: "Go to workspace" },
+    ],
+  },
+  {
+    title: "Windows",
+    items: [
+      { gesture: "Tap window", action: "Focus" },
+      { gesture: "✕ close", action: "Close window" },
+      { gesture: "Drag header", action: "Rearrange windows" },
+    ],
+  },
+  {
+    title: "Overlays",
+    items: [
+      { gesture: "Tap outside", action: "Close" },
+    ],
+  },
+]
+
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = React.useState(() => {
+    if (typeof window === "undefined") return false
+    return window.matchMedia(query).matches
+  })
+
+  React.useEffect(() => {
+    const mq = window.matchMedia(query)
+    const handler = (e: MediaQueryListEvent) => setMatches(e.matches)
+    setMatches(mq.matches)
+    mq.addEventListener("change", handler)
+    return () => mq.removeEventListener("change", handler)
+  }, [query])
+
+  return matches
+}
+
 function useFocusTrap(
   containerRef: React.RefObject<HTMLElement | null>,
   isActive: boolean,
@@ -76,6 +127,7 @@ function useFocusTrap(
 export function KeybindHelp() {
   const { state, dispatch } = useWorkspace()
   const containerRef = React.useRef<HTMLDivElement>(null)
+  const isMobile = useMediaQuery("(max-width: 767px)")
 
   React.useEffect(() => {
     if (state.helpOpen) {
@@ -108,9 +160,9 @@ export function KeybindHelp() {
       ref={containerRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Keybind reference"
+      aria-label={isMobile ? "Touch gestures" : "Keybind reference"}
       tabIndex={-1}
-      className="fixed inset-0 z-200 flex items-start justify-center pt-[12vh] outline-none"
+      className="fixed inset-0 z-200 flex items-start justify-center pt-[12vh] max-md:pt-0 max-md:items-end max-md:pb-0 outline-none"
       style={{
         background: "rgba(26,21,16,0.70)",
         backdropFilter: "blur(12px)",
@@ -121,12 +173,20 @@ export function KeybindHelp() {
       }}
     >
       <div
-        className="w-full max-w-[520px] overflow-hidden rounded-[12px] shadow-2xl"
+        className="w-full max-w-[520px] max-md:max-w-full max-md:rounded-b-none overflow-hidden rounded-[12px] shadow-2xl max-md:max-h-[85vh] max-md:overflow-y-auto"
         style={{
           background: "var(--bg-overlay)",
           border: "1px solid rgba(184,127,255,0.15)",
         }}
       >
+        {/* Drag handle for mobile swipe-down */}
+        <div className="hidden max-md:flex justify-center pt-2 pb-0">
+          <div
+            className="h-1 w-10 rounded-full"
+            style={{ background: "rgba(245,230,200,0.2)" }}
+          />
+        </div>
+
         <div
           className="flex items-center gap-3 px-5 py-4"
           style={{
@@ -146,55 +206,96 @@ export function KeybindHelp() {
             className="text-sm font-medium"
             style={{ color: "var(--text-primary)" }}
           >
-            Keybinds
+            {isMobile ? "Touch Gestures" : "Keybinds"}
           </span>
         </div>
 
-        <div className="max-h-[50vh] overflow-y-auto px-5 py-3">
-          {CATEGORIES.map((cat) => (
-            <div key={cat.title} className="mb-4 last:mb-0">
-              <div
-                className="mb-2 text-[11px] font-semibold uppercase tracking-wider"
-                style={{ color: "var(--neon-violet)" }}
-              >
-                {cat.title}
-              </div>
-
-              {cat.binds.map((bind) => (
+        {/* ─── Mobile: touch gestures ─── */}
+        {isMobile ? (
+          <div className="max-h-[55vh] overflow-y-auto px-5 py-3 overflow-scroll-touch">
+            {TOUCH_GESTURES.map((cat) => (
+              <div key={cat.title} className="mb-5 last:mb-0">
                 <div
-                  key={bind.keys}
-                  className="flex items-center justify-between rounded-md px-3 py-2 text-sm"
-                  style={{
-                    borderBottom: "1px solid rgba(245,230,200,0.04)",
-                  }}
+                  className="mb-2 text-[11px] font-semibold uppercase tracking-wider"
+                  style={{ color: "var(--neon-violet)" }}
                 >
-                  <span style={{ color: "var(--text-subtle)" }}>
-                    {bind.action}
-                  </span>
-                  <kbd
-                    className="rounded-md px-2.5 py-1 text-xs font-mono tracking-wide"
+                  {cat.title}
+                </div>
+
+                {cat.items.map((item) => (
+                  <div
+                    key={item.gesture}
+                    className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm"
                     style={{
-                      background: "rgba(184,127,255,0.08)",
-                      color: "var(--neon-teal)",
-                      border: "1px solid rgba(0,229,200,0.12)",
+                      borderBottom: "1px solid rgba(245,230,200,0.04)",
                     }}
                   >
-                    {bind.keys}
-                  </kbd>
+                    <span style={{ color: "var(--text-subtle)" }}>
+                      {item.action}
+                    </span>
+                    <span
+                      className="rounded-md px-2.5 py-1 text-xs font-mono tracking-wide whitespace-nowrap"
+                      style={{
+                        background: "rgba(184,127,255,0.08)",
+                        color: "var(--neon-teal)",
+                        border: "1px solid rgba(0,229,200,0.12)",
+                      }}
+                    >
+                      {item.gesture}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* ─── Desktop: keybinds ─── */
+          <div className="max-h-[50vh] overflow-y-auto px-5 py-3">
+            {CATEGORIES.map((cat) => (
+              <div key={cat.title} className="mb-4 last:mb-0">
+                <div
+                  className="mb-2 text-[11px] font-semibold uppercase tracking-wider"
+                  style={{ color: "var(--neon-violet)" }}
+                >
+                  {cat.title}
                 </div>
-              ))}
-            </div>
-          ))}
-        </div>
+
+                {cat.binds.map((bind) => (
+                  <div
+                    key={bind.keys}
+                    className="flex items-center justify-between rounded-md px-3 py-2 text-sm"
+                    style={{
+                      borderBottom: "1px solid rgba(245,230,200,0.04)",
+                    }}
+                  >
+                    <span style={{ color: "var(--text-subtle)" }}>
+                      {bind.action}
+                    </span>
+                    <kbd
+                      className="rounded-md px-2.5 py-1 text-xs font-mono tracking-wide"
+                      style={{
+                        background: "rgba(184,127,255,0.08)",
+                        color: "var(--neon-teal)",
+                        border: "1px solid rgba(0,229,200,0.12)",
+                      }}
+                    >
+                      {bind.keys}
+                    </kbd>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
 
         <div
-          className="flex items-center gap-4 px-5 py-2.5 text-[11px]"
+          className="flex items-center gap-4 px-5 py-2.5 text-[11px] max-md:pb-[calc(0.625rem+56px)]"
           style={{
             color: "var(--text-subtle)",
             borderTop: "1px solid rgba(184,127,255,0.08)",
           }}
         >
-          <span>Esc close</span>
+          <span>{isMobile ? "Tap outside or swipe down" : "Esc"} close</span>
         </div>
       </div>
     </div>
