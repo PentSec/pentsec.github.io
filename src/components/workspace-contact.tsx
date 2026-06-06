@@ -9,37 +9,37 @@ const LINKS: SocialLink[] = [
   {
     label: "GitHub",
     path: "~/github/pentsec",
-    href: "https://github.com/pentsec",
+    href: "https://jeff.is-a.dev/gh",
     color: "var(--neon-violet)",
   },
   {
     label: "Twitter / X",
     path: "~/x/__J3ff__",
-    href: "https://x.com/__J3ff_",
+    href: "https://jeff.is-a.dev/x",
     color: "var(--neon-teal)",
   },
   {
     label: "Instagram",
     path: "~/instagram/jeffreysfuenmayor_",
-    href: "https://www.instagram.com/jeffreysfuenmayor_/",
+    href: "https://jeff.is-a.dev/ig",
     color: "var(--neon-magenta)",
   },
   {
     label: "YouTube",
     path: "~/youtube/@sitoz1",
-    href: "https://www.youtube.com/@Sitoz1",
+    href: "https://jeff.is-a.dev/yt",
     color: "var(--neon-red)",
   },
   {
     label: "Twitch",
     path: "~/twitch/sitoz1",
-    href: "https://twitch.tv/sitoz1",
+    href: "https://jeff.is-a.dev/tw",
     color: "var(--neon-amber)",
   },
   {
     label: "Discord",
     path: "~/discord/pentsec",
-    href: "https://discord.gg/fUw5C6tcZs",
+    href: "https://jeff.is-a.dev/dc",
     color: "var(--neon-violet)",
   },
   {

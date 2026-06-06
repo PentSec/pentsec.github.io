@@ -8,10 +8,10 @@ export function WorkspaceAbout() {
     ["email",
       <a
         key="email"
-        href="mailto:pentsec.2@protonmail.com"
+        href="mailto:contact@jeff.is-a.dev"
         className="transition-all duration-150 text-[var(--text-primary)] underline underline-offset-2 decoration-1 decoration-[var(--neon-violet)]/40 hover:decoration-[var(--neon-violet)] hover:text-[var(--neon-violet)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--neon-violet)] rounded"
       >
-        pentsec.2@protonmail.com
+        contact@jeff.is-a.dev
       </a>,
     ],
   ]
